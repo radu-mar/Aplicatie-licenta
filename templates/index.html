@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WatchF1 | Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="topbar">
+      <div class="logo-area">
+        <div class="logo-mark">WF1</div>
+        <div>
+          <h1>WatchF1</h1>
+          <p>F1 analytics dashboard</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="drivers.html">Drivers</a>
+        <a href="tracks.html">Tracks</a>
+        <a href="#">News</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-text">
+        <h2>Formula 1 analytics interface for race monitoring and prediction</h2>
+      </div>
+
+      <div class="hero-side">
+        <div class="hero-stat-card">
+          <span>Current Grand Prix</span>
+          <strong>Australian GP</strong>
+        </div>
+        <div class="hero-stat-card">
+          <span>Track Status</span>
+          <strong>Race Ready</strong>
+        </div>
+      </div>
+    </section>
+
+    <main class="dashboard-grid">
+      <section class="card live-feed-card">
+        <div class="card-header">
+          <h3>Live Race Feed</h3>
+        </div>
+
+        <div class="live-placeholder">
+            <div class="live-empty-box"></div>
+        </div>
+      </section>
+
+      <section class="card prediction-card">
+        <div class="card-header">
+          <h3>Predicted Winners</h3>
+        </div>
+
+        <div class="podium">
+          <div class="podium-card place-2">
+            <span class="place">2</span>
+            <h4>Charles Leclerc</h4>
+            <p>Win probability</p>
+            <strong>24%</strong>
+          </div>
+
+          <div class="podium-card place-1">
+            <span class="place">1</span>
+            <h4>Max Verstappen</h4>
+            <p>Win probability</p>
+            <strong>38%</strong>
+          </div>
+
+          <div class="podium-card place-3">
+            <span class="place">3</span>
+            <h4>Lando Norris</h4>
+            <p>Win probability</p>
+            <strong>19%</strong>
+          </div>
+        </div>
+
+        <div class="driver-list">
+          <div class="driver-row">
+            <span>Lewis Hamilton</span>
+            <span>8%</span>
+          </div>
+          <div class="driver-row">
+            <span>Carlos Sainz</span>
+            <span>5%</span>
+          </div>
+          <div class="driver-row">
+            <span>George Russell</span>
+            <span>3%</span>
+          </div>
+          <div class="driver-row">
+            <span>Oscar Piastri</span>
+            <span>2%</span>
+          </div>
+          <div class="driver-row">
+            <span>Fernando Alonso</span>
+            <span>1%</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card circuit-card">
+        <div class="card-header">
+          <h3>Track Overview</h3>
+        </div>
+
+        <div class="circuit-content">
+          <div class="track-map-box">
+            <svg viewBox="0 0 300 220" class="track-svg">
+              <path
+                d="M45 160
+                   C35 125, 50 80, 95 65
+                   C135 50, 180 55, 210 80
+                   C235 100, 245 135, 225 160
+                   C205 185, 165 190, 140 175
+                   C120 162, 105 145, 82 146
+                   C68 147, 55 154, 45 160 Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <p>Circuit shape</p>
+          </div>
+
+          <div class="track-stats">
+            <div class="track-stat">
+              <span>Track</span>
+              <strong>Albert Park</strong>
+            </div>
+            <div class="track-stat">
+              <span>Length</span>
+              <strong>5.278 km</strong>
+            </div>
+            <div class="track-stat">
+              <span>Turns</span>
+              <strong>14</strong>
+            </div>
+            <div class="track-stat">
+              <span>Lap Record</span>
+              <strong>1:19.813</strong>
+            </div>
+            <div class="track-stat">
+              <span>DRS Zones</span>
+              <strong>4</strong>
+            </div>
+            <div class="track-stat">
+              <span>Race Laps</span>
+              <strong>58</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card weather-card">
+        <div class="card-header">
+          <h3>Weather</h3>
+        </div>
+
+        <div class="weather-content">
+          <div class="weather-main">
+            <div class="weather-icon">☁</div>
+            <div>
+              <p class="weather-label">Current Conditions</p>
+              <h4 id="weather-temp">22°C</h4>
+              <span id="weather-text">Partly cloudy</span>
+            </div>
+          </div>
+
+          <div class="weather-details">
+            <div class="weather-detail">
+              <span>Humidity</span>
+              <strong id="weather-humidity">61%</strong>
+            </div>
+            <div class="weather-detail">
+              <span>Wind</span>
+              <strong id="weather-wind">14 km/h</strong>
+            </div>
+            <div class="weather-detail">
+              <span>Track city</span>
+              <strong id="weather-city">Melbourne</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

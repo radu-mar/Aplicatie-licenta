@@ -14,20 +14,18 @@ def read_csv(filename: str) -> pd.DataFrame:
     return pd.read_csv(path)
 
 
-print("-- 1. incarc baza live (pasul 2) si fisierele brute --")
+print("-- 1. incarcare dataset --")
 live_laps = read_csv("dataset_02_istoric_pitstops.csv")
 results = read_csv("results.csv")
 status = read_csv("status.csv")
 races = read_csv("races.csv")
 
-print("-- 2. unesc results cu status + info despre cursa si filtrez era moderna (2014+) --")
+print("-- 2. unire results cu status + info despre cursa si filtrare era moderna (2014+) --")
 results = results.merge(status, on="statusId", how="left")
 results = results.merge(races.loc[:, ["raceId", "year", "round", "circuitId"]], on="raceId", how="left")
-
-# pastrez doar 2014+ (consistenta cu restul pipeline-ului)
 results = results[results["year"] >= 2014].copy()
 
-print("-- 3. definesc accident vs defectiune tehnica --")
+print("-- 3. definire accident vs defectiune tehnica --")
 accidente = ["Accident", "Collision", "Spun off", "Collision damage", "Fatal accident"]
 defectiuni = ["Engine", "Gearbox", "Transmission", "Hydraulics", "Electrical",
              "Suspension", "Brakes", "Overheating", "Power Unit"]
@@ -35,11 +33,9 @@ defectiuni = ["Engine", "Gearbox", "Transmission", "Hydraulics", "Electrical",
 results["is_accident"] = results["status"].isin(accidente).astype(int)
 results["is_mechanical"] = results["status"].isin(defectiuni).astype(int)
 
-print("-- 4. calculez istoric pilot / echipa / circuit (fara leakage) --")
+print("-- 4. calculez istoric pilot / echipa / circuit --")
 
-# -------------------------------------------------
-# a) istoric pilot: accidente anterioare + rata
-# -------------------------------------------------
+#istoric pilot: accidente anterioare + rata
 results = results.sort_values(by=["driverId", "year", "round"]).copy()
 
 results["istoric_accidente_pilot"] = (
@@ -56,10 +52,8 @@ results["rata_accidente_pilot"] = np.where(
 
 pilot_feat = results.loc[:, ["raceId", "driverId", "istoric_accidente_pilot", "rata_accidente_pilot"]].copy()
 
-# -------------------------------------------------
-# b) istoric echipa: defectiuni anterioare + rata
-#    agregare pe cursa si shift(1) ca sa evit leakage in aceeasi cursa
-# -------------------------------------------------
+# istoric echipa: defectiuni anterioare + rata
+# shift(1) pt a evita leakeage in aceasi cursa
 team_race = (
     results.groupby(["constructorId", "raceId", "year", "round"], as_index=False)
     .agg(
@@ -88,10 +82,9 @@ team_race["rata_defectiuni_echipa"] = np.where(
 
 team_feat = team_race.loc[:, ["raceId", "constructorId", "istoric_defectiuni_echipa", "rata_defectiuni_echipa"]].copy()
 
-# -------------------------------------------------
-# c) istoric circuit: accidente anterioare + rata
-#    agregare pe cursa si shift(1) ca sa evit leakage in aceeasi cursa
-# -------------------------------------------------
+# istoric circuit: accidente anterioare + rata
+# shift(1) pt a evita leakeage in aceasi cursa
+
 circuit_race = (
     results.groupby(["circuitId", "raceId", "year", "round"], as_index=False)
     .agg(
@@ -120,9 +113,7 @@ circuit_race["rata_accidente_circuit"] = np.where(
 
 circuit_feat = circuit_race.loc[:, ["raceId", "circuitId", "rata_accidente_circuit"]].copy()
 
-# -------------------------------------------------
-# d) reunesc toate feature-urile pe fiecare pilot in acea cursa
-# -------------------------------------------------
+# reunirea tuturor feature-urilor pe fiecare pilot in acea cursa
 base_keys = results.loc[:, ["raceId", "driverId", "constructorId", "circuitId"]].copy()
 
 features_abandon = base_keys.merge(pilot_feat, on=["raceId", "driverId"], how="left")
@@ -138,7 +129,7 @@ inteligenta_abandon = features_abandon.loc[:, [
     "rata_accidente_circuit"
 ]].drop_duplicates(subset=["raceId", "driverId"])
 
-print("-- 5. lipesc feature-urile de abandon in universul live --")
+print("-- 5. lipirea feature-urilor de abandon in dataset --")
 live_laps = live_laps.merge(inteligenta_abandon, on=["raceId", "driverId"], how="left")
 
 cols_abandon = [
@@ -154,4 +145,4 @@ print("-- 6. salvez pasul 3 --")
 save_path = os.path.join(data_folder, "dataset_03_istoric_abandon.csv")
 live_laps.to_csv(save_path, index=False)
 
-print(f"gata! am salvat pasul 3 in: {save_path}")
+print(f"am salvat pasul 3 in: {save_path}")

@@ -17,11 +17,9 @@ lap_times = read_csv("lap_times.csv")
 results = read_csv("results.csv")
 races = read_csv("races.csv")
 
-# datele de dinainte de 2014 sunt mai putin relevante (schimbari majore de regulamente/era)
-print("-- 2. filtrez doar era moderna (2014 - prezent), ca sa evit concept drift --")
+print("-- 2. filtrez doar era moderna (2014 - prezent) --")
 modern_races = races.loc[races["year"] >= 2014, ["raceId", "year"]].copy()
 
-# pastrez doar cursele moderne
 results_modern = results.merge(modern_races, on="raceId", how="inner")
 lap_times_modern = lap_times.merge(modern_races, on="raceId", how="inner")
 
@@ -33,8 +31,7 @@ target = target.drop(columns=["positionOrder"])
 print("-- 4. construirea datasetului: 1 rand = 1 tur pentru un pilot --")
 live_laps = lap_times_modern.merge(target, on=["raceId", "driverId"], how="inner")
 
-print("-- 5. calculez informatii despre cursa: tururi ramase si progres --")
-# aflu cate tururi are fiecare cursa (maximul din lap)
+print("-- 5. calculare informatii despre cursa: tururi ramase si progres --")
 total_laps = (
     live_laps.groupby("raceId", as_index=False)["lap"]
     .max()
@@ -43,7 +40,6 @@ total_laps = (
 
 live_laps = live_laps.merge(total_laps, on="raceId", how="left")
 
-# pastrez denumirile initiale ale feature-urilor (ca sa fie compatibile cu restul pipeline-ului)
 live_laps["laps_remaining"] = live_laps["total_laps_race"] - live_laps["lap"]
 live_laps["race_progress"] = live_laps["lap"] / live_laps["total_laps_race"]
 live_laps["laps_remaining_ratio"] = live_laps["laps_remaining"] / live_laps["total_laps_race"]

@@ -13,14 +13,14 @@ def read_csv(filename: str) -> pd.DataFrame:
     return pd.read_csv(path)
 
 
-print("-- 1. incarc master dataset-ul si fisierele de standings --")
+print("-- 1. incarcarea datasetului --")
 master = read_csv("dataset_04_master_live.csv")
 driver_standings = read_csv("driver_standings.csv")
 constructor_standings = read_csv("constructor_standings.csv")
 races = read_csv("races.csv")
 
 print("-- 0. curatare + consistenta (idempotent) --")
-# daca rerulam scriptul, scot coloanele deja existente ca sa evit _x / _y la merge
+# in cazul in care se reruleaza scriptul, se scot coloanele deja existente ca sa evit _x / _y la merge
 standings_cols = [
     "driver_puncte_inainte_de_cursa",
     "driver_pozitie_campionat",
@@ -33,25 +33,22 @@ standings_cols = [
 ]
 master = master.drop(columns=[c for c in standings_cols if c in master.columns], errors="ignore")
 
-# info cronologica (si filtrare era moderna)
 race_info = races.loc[:, ["raceId", "year", "round"]].copy()
 race_info = race_info[race_info["year"] >= 2014].copy()
 
-# optional: daca master are year, pastrez doar 2014+
 if "year" in master.columns:
     master = master[master["year"] >= 2014].copy()
 
-print("-- 2. pregatesc driver standings (fara leakage) --")
+print("-- 2. pregatire driver standings (fara leakage) --")
 ds = driver_standings.merge(race_info, on="raceId", how="inner")
 
 # convertesc la numeric in caz ca vin ca string
 for col in ["points", "position"]:
     ds[col] = pd.to_numeric(ds[col], errors="coerce")
 
-# sortare determinista
 ds = ds.sort_values(by=["year", "round", "driverId"]).copy()
 
-# fara leakage: folosesc standings-ul din cursa anterioara (shift in cadrul aceluiasi an)
+# fara leakage: standings-ul din cursa anterioara
 ds["driver_puncte_inainte_de_cursa"] = ds.groupby(["year", "driverId"])["points"].shift(1)
 ds["driver_pozitie_campionat"] = ds.groupby(["year", "driverId"])["position"].shift(1)
 
@@ -59,11 +56,11 @@ ds["driver_pozitie_campionat"] = ds.groupby(["year", "driverId"])["position"].sh
 ds["driver_puncte_inainte_de_cursa"] = ds["driver_puncte_inainte_de_cursa"].fillna(0.0)
 ds["driver_pozitie_campionat"] = ds["driver_pozitie_campionat"].fillna(20)
 
-# extra: gap fata de liderul campionatului (inainte de cursa)
+# gap fata de liderul campionatului (inainte de cursa)
 leader_driver_points = ds.groupby("raceId")["driver_puncte_inainte_de_cursa"].transform("max")
 ds["driver_gap_lider_campionat"] = (leader_driver_points - ds["driver_puncte_inainte_de_cursa"]).clip(lower=0)
 
-# extra: flag top3
+# flag top3
 ds["driver_top3_campionat"] = (ds["driver_pozitie_campionat"] <= 3).astype(int)
 
 ds_clean = ds.loc[:, [
@@ -101,7 +98,7 @@ cs_clean = cs.loc[:, [
     "echipa_top3_campionat",
 ]].drop_duplicates(subset=["raceId", "constructorId"])
 
-print("-- 4. integrez standings in master + verificari rapide --")
+print("-- 4. integrare standings in dataset --")
 rows_before = len(master)
 
 out = master.merge(ds_clean, on=["raceId", "driverId"], how="left")
@@ -125,17 +122,17 @@ fill_defaults = {
 for col, val in fill_defaults.items():
     out[col] = out[col].fillna(val)
 
-print("verificare rapida coloane standings (non-null):")
+print("verificare coloane standings (non-null):")
 for col in fill_defaults.keys():
     print(f" - {col}: {out[col].notna().mean() * 100:.2f}%")
 
-# sanity: pentru acelasi pilot in aceeasi cursa, standing-urile trebuie sa fie constante
+# pentru acelasi pilot in aceeasi cursa, standing-urile trebuie sa fie constante
 max_unique = out.groupby(["raceId", "driverId"])["driver_puncte_inainte_de_cursa"].nunique().max()
 print(f"sanity check (max valori distincte driver_puncte_inainte_de_cursa per raceId+driverId): {max_unique}")
 
-print("-- 5. salvez master dataset-ul actualizat --")
+print("-- 5. salvarea datasetului --")
 save_path = os.path.join(data_folder, "dataset_04_master_live.csv")
 out.to_csv(save_path, index=False)
 
-print(f"gata! standings integrate pentru {len(out)} randuri.")
+print(f"standings integrate pentru {len(out)} randuri.")
 print(f"fisier salvat: {save_path}")

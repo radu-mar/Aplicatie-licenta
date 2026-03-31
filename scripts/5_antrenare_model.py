@@ -103,10 +103,10 @@ print("cwd =", os.getcwd())
 print("csv absolut =", os.path.abspath(csv_path))
 
 
-print("-- 1. incarc master dataset-ul --")
+print("-- 1. incarcare dataset --")
 df = read_csv("dataset_04_master_live.csv")
 
-print("-- 2. aleg feature-urile si target-ul --")
+print("-- 2. alegerea feature-urilor --")
 # features = [
 #     # dinamica live
 #     "lap",
@@ -144,6 +144,7 @@ print("-- 2. aleg feature-urile si target-ul --")
 #     "echipa_top3_campionat",
 # ]
 
+
 features = [
     "lap",
     "position",
@@ -180,7 +181,6 @@ missing = [c for c in required if c not in df.columns]
 if missing:
     raise ValueError(f"lipsesc coloane din dataset: {missing}")
 
-# curatare: scot randurile cu nan pe features / target
 df = df.dropna(subset=features + ["is_winner"]).copy()
 
 print("-- 3. impartire cronologica train/test --")

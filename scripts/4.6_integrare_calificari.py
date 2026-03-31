@@ -14,7 +14,6 @@ def read_csv(filename: str) -> pd.DataFrame:
 
 
 def time_to_sec(value) -> float:
-    """transforma un timp de forma 'm:ss.mmm' in secunde; valorile lipsa devin nan."""
     if pd.isna(value) or value == r"\N":
         return np.nan
 
@@ -29,11 +28,11 @@ def time_to_sec(value) -> float:
         return np.nan
 
 
-print("-- 1. incarc master dataset-ul si datele de calificari --")
+print("-- 1. incarcare dataset --")
 master = read_csv("dataset_04_master_live.csv")
 qualifying = read_csv("qualifying.csv")
 
-print("-- 2. convertesc timpii din q1/q2/q3 in secunde --")
+print("-- 2. transform timpii din q1/q2/q3 in secunde --")
 for col in ["q1", "q2", "q3"]:
     qualifying[col] = qualifying[col].apply(time_to_sec)
 
@@ -67,7 +66,7 @@ master = master.drop(columns=[c for c in cols_qualy if c in master.columns], err
 
 out = master.merge(qualy_final, on=["raceId", "driverId"], how="left")
 
-# penalizare controlata pentru cazurile fara timp de calificare (ex: incident, lipsa inregistrare)
+# penalizare pentru cazurile fara timp de calificare
 penalty_sec = 10.0
 penalty_ratio = 0.10
 
@@ -75,9 +74,9 @@ out["gap_to_pole_sec"] = out["gap_to_pole_sec"].fillna(penalty_sec)
 out["gap_to_pole_ratio"] = out["gap_to_pole_ratio"].fillna(penalty_ratio)
 out["qualy_position"] = out["qualy_position"].fillna(20)
 
-print("-- 6. salvez master dataset-ul actualizat --")
+print("-- 6. salvarea datasetului --")
 save_path = os.path.join(data_folder, "dataset_04_master_live.csv")
 out.to_csv(save_path, index=False)
 
-print(f"gata! am adaugat feature-urile de calificari (gap_to_pole_sec / ratio).")
+print(f"am adaugat feature-urile de calificari (gap_to_pole_sec / ratio).")
 print(f"fisier salvat: {save_path}")

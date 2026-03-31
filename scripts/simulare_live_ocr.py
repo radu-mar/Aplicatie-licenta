@@ -224,7 +224,6 @@ def build_live_df(lap_current, lap_total, drivers, gaps, pre_race_df, last_gap_t
                     cumulative_gap = val
 
             else:
-                # fallback simplu
                 gap_to_leader_sec = last_gap_to_leader.get(code, 0.0)
 
         prev_gap = last_gap_to_leader.get(code, None)
@@ -355,7 +354,6 @@ while True:
             print("Shape X_live:", X_live.shape)
             print("=" * 80)
 
-            #VERIFICARE UPDATARE POZTII CE TRIMIT MODELULUI!!!!!
 
             print("TOP 3 PILOTI DUPA PROBABILITATEA MODELULUI:")
             print(pred_df.head(3).to_string(index=False))

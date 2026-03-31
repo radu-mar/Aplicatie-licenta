@@ -12,18 +12,16 @@ def read_csv(filename: str) -> pd.DataFrame:
     return pd.read_csv(path)
 
 
-print("-- 1. incarc master dataset-ul si istoricul de rezultate --")
+print("-- 1. incarcarea datasetului --")
 master = read_csv("dataset_04_master_live.csv")
 results = read_csv("results.csv")
 races = read_csv("races.csv")
 
-print("-- 2. pregatesc informatia cronologica si filtrez doar 2014+ --")
+print("-- 2. pregatesc informatia cronologica si filtrare doar 2014+ --")
 race_info = races.loc[:, ["raceId", "year", "round"]].copy()
 race_info = race_info[race_info["year"] >= 2014].copy()
 
-# -------------------------------------------------
-# a) momentum pilot (media punctelor pe ultimele n curse, fara leakage)
-# -------------------------------------------------
+# momentum pilot (media punctelor pe ultimele n curse)
 print("-- 3. calculez momentum-ul pilotului (3 si 6 curse) --")
 
 pilot_points = results.loc[:, ["raceId", "driverId", "points"]].merge(
@@ -50,16 +48,14 @@ pilot_momentum_final = pilot_points.loc[:, [
     "raceId", "driverId", "pilot_momentum_3", "pilot_momentum_6"
 ]].drop_duplicates(subset=["raceId", "driverId"])
 
-# -------------------------------------------------
-# b) momentum echipa (pe cursa, nu pe rand de pilot; fara leakage)
-# -------------------------------------------------
+# momentum echipa (pe cursa, nu pe rand de pilot)
 print("-- 3.1 calculez momentum-ul echipei (3 si 6 curse) --")
 
 team_points = results.loc[:, ["raceId", "constructorId", "points"]].merge(
     race_info, on="raceId", how="inner"
 )
 
-# agregare: punctele echipei pe cursa = suma ambilor piloti
+# punctele echipei pe cursa = suma ambilor piloti
 team_race = (
     team_points.groupby(["constructorId", "raceId", "year", "round"], as_index=False)
     .agg(team_points_race=("points", "sum"))
@@ -94,9 +90,9 @@ out = master.merge(pilot_momentum_final, on=["raceId", "driverId"], how="left")
 out = out.merge(team_momentum_final, on=["raceId", "constructorId"], how="left")
 out[momentum_cols] = out[momentum_cols].fillna(0)
 
-print("-- 5. salvez master dataset-ul actualizat --")
+print("-- 5. salvarea datasetului --")
 save_path = os.path.join(data_folder, "dataset_04_master_live.csv")
 out.to_csv(save_path, index=False)
 
-print("gata! atributele de momentum (pilot + echipa) au fost adaugate fara leakage.")
+print("atributele de momentum (pilot + echipa) au fost adaugate fara leakage.")
 print(f"fisier salvat: {save_path}")
