@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WatchF1 | Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
   <div class="page-wrapper">
@@ -18,9 +18,9 @@
       </div>
 
       <nav class="nav">
-        <a href="index.html" class="active">Home</a>
-        <a href="drivers.html">Drivers</a>
-        <a href="tracks.html">Tracks</a>
+        <a href="{{ url_for('index') }}" class="active">Home</a>
+        <a href="{{ url_for('drivers') }}">Drivers</a>
+        <a href="{{ url_for('tracks') }}">Tracks</a>
         <a href="#">News</a>
       </nav>
     </header>
@@ -49,7 +49,12 @@
         </div>
 
         <div class="live-placeholder">
-            <div class="live-empty-box"></div>
+          <img
+            id="live-feed"
+            src="{{ url_for('video_feed') }}"
+            alt="Live Race Feed"
+            style="width: 100%; border-radius: 12px; display: block;"
+          />
         </div>
       </section>
 
@@ -58,49 +63,44 @@
           <h3>Predicted Winners</h3>
         </div>
 
-        <div class="podium">
+        <div class="race-info" style="margin-bottom: 18px;">
+          <div class="driver-row">
+            <span>Current Lap</span>
+            <span><span id="lap-current">-</span>/<span id="lap-total">-</span></span>
+          </div>
+          <div class="driver-row">
+            <span>Safety Car</span>
+            <span id="safety-car">No</span>
+          </div>
+        </div>
+
+        <div class="podium" id="podium">
           <div class="podium-card place-2">
             <span class="place">2</span>
-            <h4>Charles Leclerc</h4>
+            <h4>-</h4>
             <p>Win probability</p>
-            <strong>24%</strong>
+            <strong>-</strong>
           </div>
 
           <div class="podium-card place-1">
             <span class="place">1</span>
-            <h4>Max Verstappen</h4>
+            <h4>-</h4>
             <p>Win probability</p>
-            <strong>38%</strong>
+            <strong>-</strong>
           </div>
 
           <div class="podium-card place-3">
             <span class="place">3</span>
-            <h4>Lando Norris</h4>
+            <h4>-</h4>
             <p>Win probability</p>
-            <strong>19%</strong>
+            <strong>-</strong>
           </div>
         </div>
 
-        <div class="driver-list">
+        <div class="driver-list" id="driver-list">
           <div class="driver-row">
-            <span>Lewis Hamilton</span>
-            <span>8%</span>
-          </div>
-          <div class="driver-row">
-            <span>Carlos Sainz</span>
-            <span>5%</span>
-          </div>
-          <div class="driver-row">
-            <span>George Russell</span>
-            <span>3%</span>
-          </div>
-          <div class="driver-row">
-            <span>Oscar Piastri</span>
-            <span>2%</span>
-          </div>
-          <div class="driver-row">
-            <span>Fernando Alonso</span>
-            <span>1%</span>
+            <span>No live data yet</span>
+            <span>-</span>
           </div>
         </div>
       </section>
@@ -194,6 +194,6 @@
     </main>
   </div>
 
-  <script src="main.js"></script>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
