@@ -1,199 +1,182 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WatchF1 | Dashboard</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WatchF1 | Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
-  <div class="page-wrapper">
+<div class="page-wrapper">
     <header class="topbar">
-      <div class="logo-area">
-        <div class="logo-mark">WF1</div>
-        <div>
-          <h1>WatchF1</h1>
-          <p>F1 analytics dashboard</p>
+        <div class="logo-area">
+            <div class="logo-mark">WF1</div>
+            <div>
+                <h1>WatchF1</h1>
+                <p>F1 analytics dashboard</p>
+            </div>
         </div>
-      </div>
 
-      <nav class="nav">
-        <a href="{{ url_for('index') }}" class="active">Home</a>
-        <a href="{{ url_for('drivers') }}">Drivers</a>
-        <a href="{{ url_for('tracks') }}">Tracks</a>
-        <a href="#">News</a>
-      </nav>
+        <nav class="nav">
+            <a href="{{ url_for('index') }}" class="active">Home</a>
+            <a href="{{ url_for('drivers') }}">Drivers</a>
+            <a href="{{ url_for('tracks') }}">Tracks</a>
+            <a href="#">News</a>
+        </nav>
     </header>
 
     <section class="hero">
-      <div class="hero-text">
-        <h2>Formula 1 analytics interface for race monitoring and prediction</h2>
-      </div>
+        <div class="hero-text">
+            <h2>Formula 1 analytics interface for race monitoring and prediction</h2>
+        </div>
 
-      <div class="hero-side">
-        <div class="hero-stat-card">
-          <span>Current Grand Prix</span>
-          <strong>Australian GP</strong>
+        <div class="hero-side">
+            <div class="hero-stat-card">
+                <span>Current Grand Prix</span>
+                <strong>Las Vegas GP</strong>
+            </div>
+            <div class="hero-stat-card">
+                <span>Track Status</span>
+                <strong>Race Ready</strong>
+            </div>
         </div>
-        <div class="hero-stat-card">
-          <span>Track Status</span>
-          <strong>Race Ready</strong>
-        </div>
-      </div>
     </section>
 
     <main class="dashboard-grid">
-      <section class="card live-feed-card">
-        <div class="card-header">
-          <h3>Live Race Feed</h3>
-        </div>
-
-        <div class="live-placeholder">
-          <img
-            id="live-feed"
-            src="{{ url_for('video_feed') }}"
-            alt="Live Race Feed"
-            style="width: 100%; border-radius: 12px; display: block;"
-          />
-        </div>
-      </section>
-
-      <section class="card prediction-card">
-        <div class="card-header">
-          <h3>Predicted Winners</h3>
-        </div>
-
-        <div class="race-info" style="margin-bottom: 18px;">
-          <div class="driver-row">
-            <span>Current Lap</span>
-            <span><span id="lap-current">-</span>/<span id="lap-total">-</span></span>
-          </div>
-          <div class="driver-row">
-            <span>Safety Car</span>
-            <span id="safety-car">No</span>
-          </div>
-        </div>
-
-        <div class="podium" id="podium">
-          <div class="podium-card place-2">
-            <span class="place">2</span>
-            <h4>-</h4>
-            <p>Win probability</p>
-            <strong>-</strong>
-          </div>
-
-          <div class="podium-card place-1">
-            <span class="place">1</span>
-            <h4>-</h4>
-            <p>Win probability</p>
-            <strong>-</strong>
-          </div>
-
-          <div class="podium-card place-3">
-            <span class="place">3</span>
-            <h4>-</h4>
-            <p>Win probability</p>
-            <strong>-</strong>
-          </div>
-        </div>
-
-        <div class="driver-list" id="driver-list">
-          <div class="driver-row">
-            <span>No live data yet</span>
-            <span>-</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="card circuit-card">
-        <div class="card-header">
-          <h3>Track Overview</h3>
-        </div>
-
-        <div class="circuit-content">
-          <div class="track-map-box">
-            <svg viewBox="0 0 300 220" class="track-svg">
-              <path
-                d="M45 160
-                   C35 125, 50 80, 95 65
-                   C135 50, 180 55, 210 80
-                   C235 100, 245 135, 225 160
-                   C205 185, 165 190, 140 175
-                   C120 162, 105 145, 82 146
-                   C68 147, 55 154, 45 160 Z"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="8"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            <p>Circuit shape</p>
-          </div>
-
-          <div class="track-stats">
-            <div class="track-stat">
-              <span>Track</span>
-              <strong>Albert Park</strong>
+        <section class="card live-feed-card">
+            <div class="card-header">
+                <h3>Live Race Feed</h3>
             </div>
-            <div class="track-stat">
-              <span>Length</span>
-              <strong>5.278 km</strong>
-            </div>
-            <div class="track-stat">
-              <span>Turns</span>
-              <strong>14</strong>
-            </div>
-            <div class="track-stat">
-              <span>Lap Record</span>
-              <strong>1:19.813</strong>
-            </div>
-            <div class="track-stat">
-              <span>DRS Zones</span>
-              <strong>4</strong>
-            </div>
-            <div class="track-stat">
-              <span>Race Laps</span>
-              <strong>58</strong>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section class="card weather-card">
-        <div class="card-header">
-          <h3>Weather</h3>
-        </div>
+            <div class="live-placeholder">
+                <img
+                    id="live-feed"
+                    src="{{ url_for('video_feed') }}"
+                    alt="Live Race Feed"
+                    style="width: 100%; border-radius: 12px; display: block;"
+                />
+            </div>
+        </section>
 
-        <div class="weather-content">
-          <div class="weather-main">
-            <div class="weather-icon">☁</div>
-            <div>
-              <p class="weather-label">Current Conditions</p>
-              <h4 id="weather-temp">22°C</h4>
-              <span id="weather-text">Partly cloudy</span>
+        <section class="card prediction-card">
+            <div class="card-header">
+                <h3>Predicted Winners</h3>
             </div>
-          </div>
 
-          <div class="weather-details">
-            <div class="weather-detail">
-              <span>Humidity</span>
-              <strong id="weather-humidity">61%</strong>
+            <div class="race-info" style="margin-bottom: 18px;">
+                <div class="driver-row">
+                    <span>Current Lap</span>
+                    <span><span id="lap-current">-</span>/<span id="lap-total">-</span></span>
+                </div>
+                <div class="driver-row">
+                    <span>Safety Car</span>
+                    <span id="safety-car">No</span>
+                </div>
             </div>
-            <div class="weather-detail">
-              <span>Wind</span>
-              <strong id="weather-wind">14 km/h</strong>
+
+            <div class="podium" id="podium">
+                <div class="podium-card place-2">
+                    <span class="place">2</span>
+                    <h4>-</h4>
+                    <p>Win probability</p>
+                    <strong>-</strong>
+                </div>
+
+                <div class="podium-card place-1">
+                    <span class="place">1</span>
+                    <h4>-</h4>
+                    <p>Win probability</p>
+                    <strong>-</strong>
+                </div>
+
+                <div class="podium-card place-3">
+                    <span class="place">3</span>
+                    <h4>-</h4>
+                    <p>Win probability</p>
+                    <strong>-</strong>
+                </div>
             </div>
-            <div class="weather-detail">
-              <span>Track city</span>
-              <strong id="weather-city">Melbourne</strong>
+
+            <div class="driver-list" id="driver-list">
+                <div class="driver-row">
+                    <span>No live data yet</span>
+                    <span>-</span>
+                </div>
             </div>
-          </div>
-        </div>
-      </section>
+        </section>
+
+        <section class="card circuit-card">
+            <div class="card-header">
+                <h3>Track Overview</h3>
+            </div>
+
+            <div class="circuit-content">
+                <div class="track-map-box">
+                    <img
+                        src="https://preview.redd.it/official-las-vegas-f1-circuit-map-2-drs-zones-v0-6m1yq8mk5lzb1.png?auto=webp&s=fc1d17b7bf3b472a1d25bb771e2b89cf664b095e"
+                        alt="Las Vegas Strip Circuit map"
+                        style="width: 100%; border-radius: 12px; display: block;"
+                    />
+                    <p>Las Vegas Strip Circuit</p>
+                </div>
+
+                <div class="track-stats">
+                    <div class="track-stat">
+                        <span>Track</span>
+                        <strong>Las Vegas Strip Circuit</strong>
+                    </div>
+                    <div class="track-stat">
+                        <span>Length</span>
+                        <strong>6.201 km</strong>
+                    </div>
+                    <div class="track-stat">
+                        <span>Turns</span>
+                        <strong>17</strong>
+                    </div>
+                    <div class="track-stat">
+                        <span>Lap Record</span>
+                        <strong>1:33.365</strong>
+                    </div>
+                    <div class="track-stat">
+                        <span>DRS Zones</span>
+                        <strong>2</strong>
+                    </div>
+                    <div class="track-stat">
+                        <span>Race Laps</span>
+                        <strong>50</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card momentum-card">
+            <div class="card-header">
+                <h3 id="momentum-card-title">Top Momentum Drivers</h3>
+            </div>
+
+            <div class="momentum-content">
+                <div class="momentum-main" id="momentum-main">
+                    <div class="momentum-icon">🏁</div>
+                    <p class="momentum-label">Highest current momentum</p>
+                    <h4>-</h4>
+                    <span>Momentum: -</span>
+                </div>
+
+                <div class="momentum-details" id="momentum-details">
+                    <div class="momentum-row">
+                        <span>2nd place</span>
+                        <strong>-</strong>
+                    </div>
+                    <div class="momentum-row">
+                        <span>3rd place</span>
+                        <strong>-</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
-  </div>
+</div>
 
-  <script src="{{ url_for('static', filename='main.js') }}"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

@@ -333,7 +333,7 @@ body {
 }
 
 .circuit-card,
-.weather-card {
+.momentum-card {
   grid-column: span 1;
 }
 
@@ -372,67 +372,22 @@ body {
   gap: 14px;
 }
 
-.track-stat,
-.weather-detail {
+.track-stat {
   padding: 16px;
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border);
 }
 
-.track-stat span,
-.weather-detail span,
-.weather-label {
+.track-stat span {
   display: block;
   color: var(--text-soft);
   font-size: 0.85rem;
   margin-bottom: 7px;
 }
 
-.track-stat strong,
-.weather-detail strong {
+.track-stat strong {
   font-size: 1rem;
-}
-
-.weather-content {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.weather-main {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border);
-}
-
-.weather-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 18px;
-  display: grid;
-  place-items: center;
-  font-size: 1.8rem;
-  background: rgba(225, 6, 0, 0.14);
-}
-
-.weather-main h4 {
-  font-size: 1.7rem;
-  margin: 4px 0;
-}
-
-.weather-main span {
-  color: var(--text-soft);
-}
-
-.weather-details {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
 }
 
 .primary-btn {
@@ -462,10 +417,6 @@ body {
   .circuit-content {
     grid-template-columns: 1fr;
   }
-
-  .weather-details {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 760px) {
@@ -487,7 +438,8 @@ body {
     font-size: 1.5rem;
   }
 }
-  .drivers-page {
+
+.drivers-page {
   display: block;
 }
 
@@ -739,4 +691,80 @@ body {
   .track-stats-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.momentum-card {
+  grid-column: span 1;
+}
+
+.momentum-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  min-height: 280px;
+}
+
+.momentum-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  padding: 22px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+}
+
+.momentum-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  font-size: 1.8rem;
+  background: rgba(225, 6, 0, 0.14);
+  margin-bottom: 4px;
+}
+
+.momentum-label {
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+.momentum-main h4 {
+  font-size: 1.7rem;
+  margin: 0;
+}
+
+.momentum-main span {
+  color: var(--text-soft);
+}
+
+.momentum-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.momentum-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+}
+
+.momentum-row span {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+}
+
+.momentum-row strong {
+  font-size: 1rem;
+  color: white;
 }
