@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (liveFeedEl.canPlayType("application/vnd.apple.mpegurl")) {
       liveFeedEl.src = `${hlsUrl}?t=${Date.now()}`;
+      liveFeedEl.load();
 
       liveFeedEl.onloadedmetadata = () => {
         retryCount = 0;
@@ -385,4 +386,11 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .join("");
   }
+
+  window.addEventListener("beforeunload", () => {
+  if (hlsInstance) {
+    hlsInstance.destroy();
+    hlsInstance = null;
+  }
+});
 });

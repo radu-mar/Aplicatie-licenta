@@ -314,6 +314,12 @@ class LiveRaceProcessor:
             if lap_current == 35:
                 lap_current = 3
 
+            if lap_current == 17:
+                lap_current = 7
+
+            if lap_current == 14:
+                lap_current = 4
+
             if lap_total is None:
                 lap_total = self.last_lap_total
             else:
