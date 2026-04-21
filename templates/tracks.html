@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WatchF1 | Tracks</title>
-    <link rel="stylesheet" href="../static/style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
 <div class="page-wrapper">
@@ -29,16 +29,20 @@
         <div class="hero-text">
             <span class="badge">TRACK ANALYTICS</span>
             <h2>Circuit data and track characteristics overview</h2>
+            <p>
+                Official-style circuit cards with real track images, key layout data
+                and lap record information.
+            </p>
         </div>
 
         <div class="hero-side">
             <div class="hero-stat-card">
                 <span>Circuits</span>
-                <strong>6</strong>
+                <strong>24</strong>
             </div>
             <div class="hero-stat-card">
                 <span>Data Type</span>
-                <strong>Historical</strong>
+                <strong>Track database</strong>
             </div>
         </div>
     </section>
@@ -49,191 +53,283 @@
                 <h3>Season Track Database</h3>
             </div>
 
-            <div class="tracks-grid">
-                <article class="track-card">
-                    <div class="track-top">
-                        <div>
-                            <h4>Albert Park</h4>
-                            <p>Australia</p>
-                        </div>
-                        <span class="track-tag">Fast Flow</span>
-                    </div>
-
-                    <div class="track-visual">
-                        <svg viewBox="0 0 300 220" class="mini-track-svg">
-                            <path
-                                    d="M45 160 C35 125, 50 80, 95 65 C135 50, 180 55, 210 80 C235 100, 245 135, 225 160 C205 185, 165 190, 140 175 C120 162, 105 145, 82 146 C68 147, 55 154, 45 160 Z"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="8"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                            />
-                        </svg>
-                    </div>
-
-                    <div class="track-stats-grid">
-                        <div><span>Length</span><strong>5.278 km</strong></div>
-                        <div><span>Turns</span><strong>14</strong></div>
-                        <div><span>DRS Zones</span><strong>4</strong></div>
-                        <div><span>Lap Record</span><strong>1:19.813</strong></div>
-                    </div>
-                </article>
-
-                <article class="track-card">
-                    <div class="track-top">
-                        <div>
-                            <h4>Monza</h4>
-                            <p>Italy</p>
-                        </div>
-                        <span class="track-tag">Low Downforce</span>
-                    </div>
-
-                    <div class="track-visual">
-                        <svg viewBox="0 0 300 220" class="mini-track-svg">
-                            <path
-                                    d="M55 60 C95 45, 175 40, 220 65 C245 78, 250 110, 225 122 C205 132, 175 120, 155 132 C135 144, 145 175, 115 180 C82 186, 48 165, 44 135 C40 110, 62 95, 82 88 C95 84, 102 72, 90 62 C82 56, 66 56, 55 60 Z"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="8"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                            />
-                        </svg>
-                    </div>
-
-                    <div class="track-stats-grid">
-                        <div><span>Length</span><strong>5.793 km</strong></div>
-                        <div><span>Turns</span><strong>11</strong></div>
-                        <div><span>DRS Zones</span><strong>2</strong></div>
-                        <div><span>Lap Record</span><strong>1:21.046</strong></div>
-                    </div>
-                </article>
-
-                <article class="track-card">
-                    <div class="track-top">
-                        <div>
-                            <h4>Silverstone</h4>
-                            <p>United Kingdom</p>
-                        </div>
-                        <span class="track-tag">High Speed</span>
-                    </div>
-
-                    <div class="track-visual">
-                        <svg viewBox="0 0 300 220" class="mini-track-svg">
-                            <path
-                                    d="M42 130 C45 92, 78 70, 120 72 C145 73, 160 54, 186 50 C220 45, 252 66, 246 95 C241 118, 210 120, 188 132 C165 145, 170 177, 138 181 C105 185, 95 154, 72 147 C56 142, 41 145, 42 130 Z"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="8"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                            />
-                        </svg>
-                    </div>
-
-                    <div class="track-stats-grid">
-                        <div><span>Length</span><strong>5.891 km</strong></div>
-                        <div><span>Turns</span><strong>18</strong></div>
-                        <div><span>DRS Zones</span><strong>2</strong></div>
-                        <div><span>Lap Record</span><strong>1:27.097</strong></div>
-                    </div>
-                </article>
-
-                <article class="track-card">
-                    <div class="track-top">
-                        <div>
-                            <h4>Spa-Francorchamps</h4>
-                            <p>Belgium</p>
-                        </div>
-                        <span class="track-tag">Elevation</span>
-                    </div>
-
-                    <div class="track-visual">
-                        <svg viewBox="0 0 300 220" class="mini-track-svg">
-                            <path
-                                    d="M60 168 C42 138, 48 88, 90 68 C123 52, 165 58, 194 80 C215 97, 246 100, 250 128 C254 154, 230 175, 198 176 C170 177, 154 152, 132 148 C106 143, 86 190, 60 168 Z"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="8"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                            />
-                        </svg>
-                    </div>
-
-                    <div class="track-stats-grid">
-                        <div><span>Length</span><strong>7.004 km</strong></div>
-                        <div><span>Turns</span><strong>19</strong></div>
-                        <div><span>DRS Zones</span><strong>2</strong></div>
-                        <div><span>Lap Record</span><strong>1:46.286</strong></div>
-                    </div>
-                </article>
-
-                <article class="track-card">
-                    <div class="track-top">
-                        <div>
-                            <h4>Suzuka</h4>
-                            <p>Japan</p>
-                        </div>
-                        <span class="track-tag">Technical</span>
-                    </div>
-
-                    <div class="track-visual">
-                        <svg viewBox="0 0 300 220" class="mini-track-svg">
-                            <path
-                                    d="M70 70 C95 45, 140 45, 160 70 C176 88, 175 112, 154 122 C136 131, 118 127, 106 138 C92 152, 100 176, 125 180 C154 185, 198 170, 215 142 C232 114, 224 68, 194 52 C161 35, 111 42, 84 56 C73 62, 68 66, 70 70 Z"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="8"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                            />
-                        </svg>
-                    </div>
-
-                    <div class="track-stats-grid">
-                        <div><span>Length</span><strong>5.807 km</strong></div>
-                        <div><span>Turns</span><strong>18</strong></div>
-                        <div><span>DRS Zones</span><strong>1</strong></div>
-                        <div><span>Lap Record</span><strong>1:30.983</strong></div>
-                    </div>
-                </article>
-
-                <article class="track-card">
-                    <div class="track-top">
-                        <div>
-                            <h4>Interlagos</h4>
-                            <p>Brazil</p>
-                        </div>
-                        <span class="track-tag">Overtaking</span>
-                    </div>
-
-                    <div class="track-visual">
-                        <svg viewBox="0 0 300 220" class="mini-track-svg">
-                            <path
-                                    d="M55 135 C40 104, 62 70, 110 62 C150 55, 202 62, 230 88 C245 101, 244 125, 226 136 C206 149, 175 144, 150 152 C124 161, 104 184, 78 176 C58 170, 47 152, 55 135 Z"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="8"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                            />
-                        </svg>
-                    </div>
-
-                    <div class="track-stats-grid">
-                        <div><span>Length</span><strong>4.309 km</strong></div>
-                        <div><span>Turns</span><strong>15</strong></div>
-                        <div><span>DRS Zones</span><strong>2</strong></div>
-                        <div><span>Lap Record</span><strong>1:10.540</strong></div>
-                    </div>
-                </article>
-            </div>
+            <div class="tracks-grid" id="tracks-grid"></div>
         </section>
     </main>
 </div>
 
-<script src="../static/main.js"></script>
+<script>
+const TRACKS = [
+  {
+    name: "Albert Park",
+    country: "Australia",
+    tag: "Fast Flow",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Albert-Park-Circuit.png",
+    length: "5.278 km",
+    turns: "14",
+    firstGp: "1996",
+    lapRecord: "1:19.813"
+  },
+  {
+    name: "Shanghai International Circuit",
+    country: "China",
+    tag: "Long Corners",
+    image: "https://www.sportmonks.com/wp-content/uploads/2024/02/China-GP.png",
+    length: "5.451 km",
+    turns: "16",
+    firstGp: "2004",
+    lapRecord: "1:32.238"
+  },
+  {
+    name: "Suzuka",
+    country: "Japan",
+    tag: "Technical",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Suzuka-International-Racing-Course-.png",
+    length: "5.807 km",
+    turns: "18",
+    firstGp: "1987",
+    lapRecord: "1:30.965"
+  },
+  {
+    name: "Bahrain International Circuit",
+    country: "Bahrain",
+    tag: "Desert Layout",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Bahrain-circuit.png",
+    length: "5.412 km",
+    turns: "15",
+    firstGp: "2004",
+    lapRecord: "1:31.447"
+  },
+  {
+    name: "Jeddah Corniche Circuit",
+    country: "Saudi Arabia",
+    tag: "Street Speed",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Jeddah-Corniche-Circuit.png",
+    length: "6.174 km",
+    turns: "27",
+    firstGp: "2021",
+    lapRecord: "1:30.734"
+  },
+  {
+    name: "Miami International Autodrome",
+    country: "Miami",
+    tag: "Modern Street",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Miami-International-Autodrome.png",
+    length: "5.412 km",
+    turns: "19",
+    firstGp: "2022",
+    lapRecord: "1:29.708"
+  },
+  {
+    name: "Circuit Gilles-Villeneuve",
+    country: "Canada",
+    tag: "Wall Proximity",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Circuit-Gilles-Villeneuve.png",
+    length: "4.361 km",
+    turns: "14",
+    firstGp: "1978",
+    lapRecord: "1:13.078"
+  },
+  {
+    name: "Circuit de Monaco",
+    country: "Monaco",
+    tag: "Street Precision",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Circuit-de-Monaco-.png",
+    length: "3.337 km",
+    turns: "19",
+    firstGp: "1950",
+    lapRecord: "1:12.909"
+  },
+  {
+    name: "Circuit de Barcelona-Catalunya",
+    country: "Barcelona-Catalunya",
+    tag: "Balanced",
+    image: "https://www.sportmonks.com/wp-content/uploads/2024/02/Circuit-de-Barcelona.png",
+    length: "4.657 km",
+    turns: "14",
+    firstGp: "1991",
+    lapRecord: "1:15.743"
+  },
+  {
+    name: "Red Bull Ring",
+    country: "Austria",
+    tag: "Short Lap",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Red-Bull-Ring.png",
+    length: "4.318 km",
+    turns: "10",
+    firstGp: "1970",
+    lapRecord: "1:05.619"
+  },
+  {
+    name: "Silverstone",
+    country: "Great Britain",
+    tag: "High Speed",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Silverstone-Circuit-.png",
+    length: "5.891 km",
+    turns: "18",
+    firstGp: "1950",
+    lapRecord: "1:27.097"
+  },
+  {
+    name: "Spa-Francorchamps",
+    country: "Belgium",
+    tag: "Elevation",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Circuit-de-Spa-Francorchamps.png",
+    length: "7.004 km",
+    turns: "19",
+    firstGp: "1950",
+    lapRecord: "1:44.701"
+  },
+  {
+    name: "Hungaroring",
+    country: "Hungary",
+    tag: "Twisty",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Hungaroring.png",
+    length: "4.381 km",
+    turns: "14",
+    firstGp: "1986",
+    lapRecord: "1:16.627"
+  },
+  {
+    name: "Circuit Zandvoort",
+    country: "Netherlands",
+    tag: "Banked Corners",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Circuit-Zandvoort.png",
+    length: "4.259 km",
+    turns: "14",
+    firstGp: "1952",
+    lapRecord: "1:11.097"
+  },
+  {
+    name: "Autodromo Nazionale Monza",
+    country: "Italy",
+    tag: "Low Downforce",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Autodromo-Nazionale-Monza.png",
+    length: "5.793 km",
+    turns: "11",
+    firstGp: "1950",
+    lapRecord: "1:21.046"
+  },
+  {
+    name: "Madrid Circuit",
+    country: "Spain - Madrid",
+    tag: "New Venue",
+    image: "https://www.sportmonks.com/wp-content/uploads/2026/01/Circuit_de_Madrid.png",
+    length: "5.416 km",
+    turns: "22",
+    firstGp: "2026",
+    lapRecord: "--"
+  },
+  {
+    name: "Baku City Circuit",
+    country: "Azerbaijan",
+    tag: "City Speed",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Baku-City-Circuit.png",
+    length: "6.003 km",
+    turns: "20",
+    firstGp: "2016",
+    lapRecord: "1:43.009"
+  },
+  {
+    name: "Marina Bay Street Circuit",
+    country: "Singapore",
+    tag: "Night Race",
+    image: "https://www.sportmonks.com/wp-content/uploads/2024/02/Singapore-GP.png",
+    length: "4.940 km",
+    turns: "19",
+    firstGp: "2008",
+    lapRecord: "1:34.486"
+  },
+  {
+    name: "Circuit of The Americas",
+    country: "United States",
+    tag: "Mixed Sector",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Circuit-of-The-Americas.png",
+    length: "5.513 km",
+    turns: "20",
+    firstGp: "2012",
+    lapRecord: "1:36.169"
+  },
+  {
+    name: "Autodromo Hermanos Rodriguez",
+    country: "Mexico",
+    tag: "Altitude",
+    image: "https://www.sportmonks.com/wp-content/uploads/2026/01/Autodromo-Hermanos-Rodriguez-2.png",
+    length: "4.304 km",
+    turns: "17",
+    firstGp: "1963",
+    lapRecord: "1:17.774"
+  },
+  {
+    name: "Autodromo Jose Carlos Pace",
+    country: "Brazil",
+    tag: "Overtaking",
+    image: "https://www.sportmonks.com/wp-content/uploads/2026/01/Autodromo_Jose_Carlos_Pace.png",
+    length: "4.309 km",
+    turns: "15",
+    firstGp: "1973",
+    lapRecord: "1:10.540"
+  },
+  {
+    name: "Las Vegas Strip Circuit",
+    country: "Las Vegas",
+    tag: "Night Street",
+    image: "https://www.sportmonks.com/wp-content/uploads/2024/02/Las-Vegas-GP.png",
+    length: "6.201 km",
+    turns: "17",
+    firstGp: "2023",
+    lapRecord: "1:33.365"
+  },
+  {
+    name: "Lusail International Circuit",
+    country: "Qatar",
+    tag: "Fast Sweepers",
+    image: "https://www.sportmonks.com/wp-content/uploads/2023/03/GP-Qatar.png",
+    length: "5.419 km",
+    turns: "16",
+    firstGp: "2021",
+    lapRecord: "1:22.384"
+  },
+  {
+    name: "Yas Marina Circuit",
+    country: "Abu Dhabi",
+    tag: "Season Finale",
+    image: "https://www.sportmonks.com/wp-content/uploads/2022/07/Yas-Marina-Circuit-.png",
+    length: "5.281 km",
+    turns: "16",
+    firstGp: "2009",
+    lapRecord: "1:26.103"
+  }
+];
+
+const tracksGrid = document.getElementById("tracks-grid");
+
+tracksGrid.innerHTML = TRACKS.map(track => `
+  <article class="track-card">
+    <div class="track-top">
+      <div>
+        <h4>${track.name}</h4>
+        <p>${track.country}</p>
+      </div>
+      <span class="track-tag">${track.tag}</span>
+    </div>
+
+    <div class="track-visual">
+      <img
+        src="${track.image}"
+        alt="${track.name}"
+        class="track-visual-img"
+      />
+    </div>
+
+    <div class="track-stats-grid">
+      <div><span>Length</span><strong>${track.length}</strong></div>
+      <div><span>Turns</span><strong>${track.turns}</strong></div>
+      <div><span>First GP</span><strong>${track.firstGp}</strong></div>
+      <div><span>Lap Record</span><strong>${track.lapRecord}</strong></div>
+    </div>
+  </article>
+`).join("");
+</script>
 </body>
 </html>

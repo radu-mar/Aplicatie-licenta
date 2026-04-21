@@ -226,102 +226,135 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function loadDriversPage() {
-    const driversGrid = document.getElementById("drivers-grid");
-    if (!driversGrid) return;
+  const driversGrid = document.getElementById("drivers-grid");
+  if (!driversGrid) return;
 
-    const driverNumbers = {
-      VER: 1, PER: 11, HAM: 44, RUS: 63, LEC: 16, SAI: 55,
-      ALO: 14, STR: 18, NOR: 4, PIA: 81, OCO: 31, GAS: 10,
-      ALB: 23, SAR: 2, BOT: 77, ZHO: 24, MAG: 20, HUL: 27,
-      TSU: 22, DEV: 21, RIC: 3, LAW: 40
-    };
+  const driverNumbers = {
+    VER: 1, PER: 11, HAM: 44, RUS: 63, LEC: 16, SAI: 55,
+    ALO: 14, STR: 18, NOR: 4, PIA: 81, OCO: 31, GAS: 10,
+    ALB: 23, SAR: 2, BOT: 77, ZHO: 24, MAG: 20, HUL: 27,
+    TSU: 22, DEV: 21, RIC: 3, LAW: 40
+  };
 
-    const driverNames = {
-      VER: "Max Verstappen",
-      PER: "Sergio Perez",
-      HAM: "Lewis Hamilton",
-      RUS: "George Russell",
-      LEC: "Charles Leclerc",
-      SAI: "Carlos Sainz",
-      ALO: "Fernando Alonso",
-      STR: "Lance Stroll",
-      NOR: "Lando Norris",
-      PIA: "Oscar Piastri",
-      OCO: "Esteban Ocon",
-      GAS: "Pierre Gasly",
-      ALB: "Alexander Albon",
-      SAR: "Logan Sargeant",
-      BOT: "Valtteri Bottas",
-      ZHO: "Guanyu Zhou",
-      MAG: "Kevin Magnussen",
-      HUL: "Nico Hulkenberg",
-      TSU: "Yuki Tsunoda",
-      DEV: "Nyck de Vries",
-      RIC: "Daniel Ricciardo",
-      LAW: "Liam Lawson"
-    };
+  const driverNames = {
+    VER: "Max Verstappen",
+    PER: "Sergio Perez",
+    HAM: "Lewis Hamilton",
+    RUS: "George Russell",
+    LEC: "Charles Leclerc",
+    SAI: "Carlos Sainz",
+    ALO: "Fernando Alonso",
+    STR: "Lance Stroll",
+    NOR: "Lando Norris",
+    PIA: "Oscar Piastri",
+    OCO: "Esteban Ocon",
+    GAS: "Pierre Gasly",
+    ALB: "Alexander Albon",
+    SAR: "Logan Sargeant",
+    BOT: "Valtteri Bottas",
+    ZHO: "Guanyu Zhou",
+    MAG: "Kevin Magnussen",
+    HUL: "Nico Hulkenberg",
+    TSU: "Yuki Tsunoda",
+    DEV: "Nyck de Vries",
+    RIC: "Daniel Ricciardo",
+    LAW: "Liam Lawson"
+  };
 
-    try {
-      const response = await fetch("/api/drivers");
-      const drivers = await response.json();
+  const driverImages = {
+    VER: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS92ZXIucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo1MDB9fX0=",
+    PER: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9wZXIucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    HAM: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9oYW0ucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    ALO: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9hbG8ucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    LEC: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9sZWMucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    NOR: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9ub3IucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    SAI: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9zYWkucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    RUS: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9ydXMucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    PIA: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9waWEucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    STR: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9zdHIucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    GAS: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9nYXMucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    OCO: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9vY28ucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    ALB: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9hbGIucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    TSU: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS90c3UucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    BOT: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9ib3QucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    HUL: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9odWwucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    RIC: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9yaWMucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    ZHO: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS96aG8ucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    MAG: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9tYWcucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    LAW: "https://e1.365dm.com/f1/drivers/256x256/h_full_1532.png",
+    SAR: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyNC9kcml2ZXJzL2hlYWRzaG90cy9mMS9zYXIucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MH19fQ==",
+    DEV: "https://image-service.zaonce.net/eyJidWNrZXQiOiJmcm9udGllci1jbXMiLCJrZXkiOiJmMW1hbmFnZXIvMjAyMy9kcml2ZXJzL2hlYWRzaG90cy9mMS9kZXYucG5nIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo1MDB9fX0="
+  };
 
-      if (!Array.isArray(drivers) || drivers.length === 0) {
-        driversGrid.innerHTML = `
-          <div class="driver-card">
-            <div class="driver-top">
-              <div class="driver-avatar">--</div>
-              <div>
-                <h4>No data</h4>
-                <p>Drivers dataset is empty</p>
-              </div>
+  try {
+    const response = await fetch("/api/drivers");
+    const drivers = await response.json();
+
+    if (!Array.isArray(drivers) || drivers.length === 0) {
+      driversGrid.innerHTML = `
+        <div class="driver-card">
+          <div class="driver-top">
+            <div class="driver-avatar">--</div>
+            <div>
+              <h4>No data</h4>
+              <p>Drivers dataset is empty</p>
             </div>
           </div>
-        `;
-        return;
-      }
-
-      driversGrid.innerHTML = drivers.map(driver => {
-        const driverNumber = driverNumbers[driver.code] ?? "--";
-        const fullName = driverNames[driver.code] ?? driver.code ?? "-";
-
-        return `
-          <div class="driver-card">
-            <div class="driver-top">
-              <div class="driver-avatar">${driver.code ?? "--"}</div>
-              <div>
-                <h4>${fullName}</h4>
-                <p>Driver profile</p>
-              </div>
-            </div>
-
-            <div class="driver-number">#${driverNumber}</div>
-
-            <div class="driver-stats-grid">
-              <div>
-                <span>Code</span>
-                <strong>${driver.code ?? "-"}</strong>
-              </div>
-              <div>
-                <span>Driver accident rate</span>
-                <strong>${driver.rata_accidente_pilot ?? "-"}%</strong>
-              </div>
-              <div>
-                <span>Pilot momentum</span>
-                <strong>${driver.pilot_momentum ?? "-"}</strong>
-              </div>
-              <div>
-                <span>Meaning</span>
-                <strong>Average points in last 3 races</strong>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join("");
-
-    } catch (error) {
-      console.error("Eroare la incarcarea driverilor:", error);
+        </div>
+      `;
+      return;
     }
+
+    driversGrid.innerHTML = drivers.map(driver => {
+      const code = driver.code ?? "--";
+      const driverNumber = driverNumbers[code] ?? "--";
+      const fullName = driverNames[code] ?? code;
+      const imageUrl = driverImages[code];
+
+      const driverAvatarHtml = imageUrl
+        ? `<img class="driver-avatar-img" src="${imageUrl}" alt="${fullName}">`
+        : `<div class="driver-avatar">${code}</div>`;
+
+      return `
+        <div class="driver-card">
+          <div class="driver-top">
+            <div class="driver-avatar-wrap">
+              ${driverAvatarHtml}
+            </div>
+            <div>
+              <h4>${fullName}</h4>
+              <p>Driver profile</p>
+            </div>
+          </div>
+
+          <div class="driver-number">#${driverNumber}</div>
+
+          <div class="driver-stats-grid">
+            <div>
+              <span>Code</span>
+              <strong>${code}</strong>
+            </div>
+            <div>
+              <span>Driver accident rate</span>
+              <strong>${driver.rata_accidente_pilot ?? "-"}%</strong>
+            </div>
+            <div>
+              <span>Pilot momentum</span>
+              <strong>${driver.pilot_momentum ?? "-"}</strong>
+            </div>
+            <div>
+              <span>Meaning</span>
+              <strong>Average points in last 3 races</strong>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+  } catch (error) {
+    console.error("Eroare la incarcarea driverilor:", error);
   }
+}
 
   function updatePodium(top3) {
     if (!podiumEl) return;
