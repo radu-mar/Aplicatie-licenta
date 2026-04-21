@@ -49,12 +49,14 @@
             </div>
 
             <div class="live-placeholder">
-                <img
-                    id="live-feed"
-                    src="{{ url_for('video_feed') }}"
-                    alt="Live Race Feed"
-                    style="width: 100%; border-radius: 12px; display: block;"
-                />
+                <video
+                        id="live-feed"
+                        controls
+                        autoplay
+                        muted
+                        playsinline
+                        style="width: 100%; border-radius: 12px; display: block;"
+                ></video>
             </div>
         </section>
 
@@ -113,9 +115,9 @@
             <div class="circuit-content">
                 <div class="track-map-box">
                     <img
-                        src="https://preview.redd.it/official-las-vegas-f1-circuit-map-2-drs-zones-v0-6m1yq8mk5lzb1.png?auto=webp&s=fc1d17b7bf3b472a1d25bb771e2b89cf664b095e"
-                        alt="Las Vegas Strip Circuit map"
-                        style="width: 100%; border-radius: 12px; display: block;"
+                            src="https://preview.redd.it/official-las-vegas-f1-circuit-map-2-drs-zones-v0-6m1yq8mk5lzb1.png?auto=webp&s=fc1d17b7bf3b472a1d25bb771e2b89cf664b095e"
+                            alt="Las Vegas Strip Circuit map"
+                            style="width: 100%; border-radius: 12px; display: block;"
                     />
                     <p>Las Vegas Strip Circuit</p>
                 </div>
@@ -177,6 +179,7 @@
     </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

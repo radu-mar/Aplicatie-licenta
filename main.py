@@ -10,9 +10,7 @@ PRE_RACE_CSV = r"D:\Licenta\AplicatieLucrareLicenta\date_f1\pre_race_lv_2023.csv
 
 app = Flask(__name__)
 
-# porneste serviciul live o singura data
 live_service = LiveRaceProcessor()
-live_service.start()
 
 
 @app.route("/")
@@ -45,28 +43,6 @@ def live_events():
 
     return Response(event_stream(), mimetype="text/event-stream")
 
-
-@app.route("/video_feed")
-def video_feed():
-    def generate():
-        while True:
-            frame = live_service.get_latest_frame_jpeg()
-
-            if frame is None:
-                time.sleep(0.1)
-                continue
-
-            yield (
-                b"--frame\r\n"
-                b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n"
-            )
-
-            time.sleep(0.03)
-
-    return Response(
-        generate(),
-        mimetype="multipart/x-mixed-replace; boundary=frame"
-    )
 
 @app.route("/api/momentum")
 def momentum():
@@ -135,5 +111,7 @@ def api_drivers():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 if __name__ == "__main__":
-    app.run(debug=True, threaded=True)
+    live_service.start()
+    app.run(host="127.0.0.1", port=5000, debug=False, threaded=True)
