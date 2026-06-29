@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WatchF1 | Drivers</title>
+    <title>WatchF1 | Piloți</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
@@ -13,35 +13,40 @@
             <div class="logo-mark">WF1</div>
             <div>
                 <h1>WatchF1</h1>
-                <p>F1 analytics dashboard</p>
+                <p>Tablou de bord F1</p>
             </div>
         </div>
 
         <nav class="nav">
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('drivers') }}" class="active">Drivers</a>
-            <a href="{{ url_for('tracks') }}">Tracks</a>
-            <a href="#">News</a>
+            <a href="{{ url_for('index') }}">Acasă</a>
+            <a href="{{ url_for('drivers') }}" class="active">Piloți</a>
+            <a href="{{ url_for('tracks') }}">Circuite</a>
         </nav>
+
+        <div class="topbar-user">
+            <span class="user-greeting">👤 {{ username }}</span>
+            <a href="{{ url_for('logout') }}" class="logout-btn">Ieșire</a>
+        </div>
     </header>
 
     <section class="hero">
         <div class="hero-text">
-            <h2>Drivers performance overview</h2>
+            <span class="badge">DATE PILOȚI</span>
+            <h2>Statistici și performanțe piloți — sezon curent</h2>
             <p>
-                Driver cards built from the pre-race dataset, showing driver code, accident rate
-                and pilot momentum.
+                Cardurile piloților sunt generate din setul de date pre-cursă și afișează
+                codul pilotului, rata de accidente și momentum-ul calculat pe ultimele 3 curse.
             </p>
         </div>
 
         <div class="hero-side">
             <div class="hero-stat-card">
-                <span>Source</span>
-                <strong>Historical, current season</strong>
+                <span>Sursă date</span>
+                <strong>Sezon curent, date istorice</strong>
             </div>
             <div class="hero-stat-card">
-                <span>Metrics shown</span>
-                <strong>3 per driver</strong>
+                <span>Metrici afișate</span>
+                <strong>3 per pilot</strong>
             </div>
         </div>
     </section>
@@ -49,7 +54,7 @@
     <main class="drivers-section">
         <section class="card">
             <div class="card-header">
-                <h3>Drivers Grid</h3>
+                <h3>Grilă piloți</h3>
             </div>
 
             <div class="drivers-grid" id="drivers-grid">
@@ -59,30 +64,16 @@
                             <div class="driver-avatar">--</div>
                         </div>
                         <div>
-                            <h4>Loading</h4>
-                            <p>Driver data</p>
+                            <h4>Se încarcă...</h4>
+                            <p>Date pilot</p>
                         </div>
                     </div>
-
                     <div class="driver-number">--</div>
-
                     <div class="driver-stats-grid">
-                        <div>
-                            <span>Code</span>
-                            <strong>-</strong>
-                        </div>
-                        <div>
-                            <span>Accident rate</span>
-                            <strong>-</strong>
-                        </div>
-                        <div>
-                            <span>Pilot momentum</span>
-                            <strong>-</strong>
-                        </div>
-                        <div>
-                            <span>Championship gap</span>
-                            <strong>-</strong>
-                        </div>
+                        <div><span>Cod</span><strong>-</strong></div>
+                        <div><span>Rată accidente</span><strong>-</strong></div>
+                        <div><span>Momentum pilot</span><strong>-</strong></div>
+                        <div><span>Semnificație</span><strong>-</strong></div>
                     </div>
                 </div>
             </div>

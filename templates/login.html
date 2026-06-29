@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WatchF1 | Autentificare</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <div class="logo-mark">WF1</div>
+            <div>
+                <h1>WatchF1</h1>
+                <p>Tablou de bord F1</p>
+            </div>
+        </div>
+
+        <h2 class="auth-title">Autentificare</h2>
+        <p class="auth-subtitle">Intră în cont pentru a accesa datele live și predicțiile de cursă.</p>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="auth-error">{{ messages[0] }}</div>
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}" class="auth-form">
+            <div class="auth-field">
+                <label for="email">Adresă de email</label>
+                <input type="email" id="email" name="email" placeholder="ex: pilot@f1.com" required autocomplete="email" />
+            </div>
+            <div class="auth-field">
+                <label for="password">Parolă</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password" />
+            </div>
+            <button type="submit" class="primary-btn auth-btn">Intră în cont</button>
+        </form>
+
+        <p class="auth-switch">
+            Nu ai cont? <a href="{{ url_for('register') }}">Creează unul</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (safetyCarEl) {
-      safetyCarEl.textContent = data.safety_car ? "Yes" : "No";
+      safetyCarEl.textContent = data.safety_car ? "Da" : "Nu";
     }
   }
 
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (mainContainer) {
           mainContainer.innerHTML = `
             <div class="momentum-icon">🏁</div>
-            <p class="momentum-label">Highest current momentum</p>
+            <p class="momentum-label">Cel mai mare momentum curent</p>
             <h4>-</h4>
             <span>Momentum: -</span>
           `;
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (cardTitle) {
-        cardTitle.textContent = "Top Momentum Drivers";
+        cardTitle.textContent = "Piloți cu cel mai mare momentum";
       }
 
       const first = data[0];
@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (mainContainer) {
         mainContainer.innerHTML = `
           <div class="momentum-icon">🏁</div>
-          <p class="momentum-label">Highest current momentum</p>
+          <p class="momentum-label">Cel mai mare momentum curent</p>
           <h4>${first ? first.code : "-"}</h4>
           <span>Momentum: ${first ? first.momentum : "-"}</span>
         `;

@@ -16,3 +16,4 @@ stream/
 videos/
 date_f1/
 roi/*.jpg
+users.db

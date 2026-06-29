@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WatchF1 | Dashboard</title>
+    <title>WatchF1 | Tablou de bord</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
@@ -13,31 +13,38 @@
             <div class="logo-mark">WF1</div>
             <div>
                 <h1>WatchF1</h1>
-                <p>F1 analytics dashboard</p>
+                <p>Tablou de bord F1</p>
             </div>
         </div>
 
         <nav class="nav">
-            <a href="{{ url_for('index') }}" class="active">Home</a>
-            <a href="{{ url_for('drivers') }}">Drivers</a>
-            <a href="{{ url_for('tracks') }}">Tracks</a>
-            <a href="#">News</a>
+            <a href="{{ url_for('index') }}" class="active">Acasă</a>
+            <a href="{{ url_for('drivers') }}">Piloți</a>
+            <a href="{{ url_for('tracks') }}">Circuite</a>
         </nav>
+
+
+        <div class="topbar-user">
+            <span class="user-greeting">👤 {{ username }}</span>
+            <a href="{{ url_for('logout') }}" class="logout-btn">Ieșire</a>
+        </div>
     </header>
 
     <section class="hero">
         <div class="hero-text">
-            <h2>Formula 1 analytics interface for race monitoring and prediction</h2>
+            <span class="badge">CURSĂ LIVE</span>
+            <h2>Interfață de analiză Formula 1 — monitorizare și predicții în timp real</h2>
+            <p>Urmărești cursa live, obții predicții de câștigător bazate pe ML și analizezi datele fiecărui pilot direct din tabloul de bord.</p>
         </div>
 
         <div class="hero-side">
             <div class="hero-stat-card">
-                <span>Current Grand Prix</span>
+                <span>Marele Premiu curent</span>
                 <strong>Las Vegas GP</strong>
             </div>
             <div class="hero-stat-card">
-                <span>Track Status</span>
-                <strong>Race Ready</strong>
+                <span>Stare pistă</span>
+                <strong>Pregătită de cursă</strong>
             </div>
         </div>
     </section>
@@ -45,7 +52,8 @@
     <main class="dashboard-grid">
         <section class="card live-feed-card">
             <div class="card-header">
-                <h3>Live Race Feed</h3>
+                <h3>Transmisie live cursă</h3>
+                <span class="status-pill red-pill">● LIVE</span>
             </div>
 
             <div class="live-placeholder">
@@ -62,17 +70,18 @@
 
         <section class="card prediction-card">
             <div class="card-header">
-                <h3>Predicted Winners</h3>
+                <h3>Predicție câștigători</h3>
+                <span class="status-pill">Model ML</span>
             </div>
 
             <div class="race-info" style="margin-bottom: 18px;">
                 <div class="driver-row">
-                    <span>Current Lap</span>
+                    <span>Tur curent</span>
                     <span><span id="lap-current">-</span>/<span id="lap-total">-</span></span>
                 </div>
                 <div class="driver-row">
                     <span>Safety Car</span>
-                    <span id="safety-car">No</span>
+                    <span id="safety-car">Nu</span>
                 </div>
             </div>
 
@@ -80,28 +89,26 @@
                 <div class="podium-card place-2">
                     <span class="place">2</span>
                     <h4>-</h4>
-                    <p>Win probability</p>
+                    <p>Probabilitate victorie</p>
                     <strong>-</strong>
                 </div>
-
                 <div class="podium-card place-1">
                     <span class="place">1</span>
                     <h4>-</h4>
-                    <p>Win probability</p>
+                    <p>Probabilitate victorie</p>
                     <strong>-</strong>
                 </div>
-
                 <div class="podium-card place-3">
                     <span class="place">3</span>
                     <h4>-</h4>
-                    <p>Win probability</p>
+                    <p>Probabilitate victorie</p>
                     <strong>-</strong>
                 </div>
             </div>
 
             <div class="driver-list" id="driver-list">
                 <div class="driver-row">
-                    <span>No live data yet</span>
+                    <span>Niciun date live încă</span>
                     <span>-</span>
                 </div>
             </div>
@@ -109,14 +116,14 @@
 
         <section class="card circuit-card">
             <div class="card-header">
-                <h3>Track Overview</h3>
+                <h3>Circuit activ</h3>
             </div>
 
             <div class="circuit-content">
                 <div class="track-map-box">
                     <img
                             src="https://preview.redd.it/official-las-vegas-f1-circuit-map-2-drs-zones-v0-6m1yq8mk5lzb1.png?auto=webp&s=fc1d17b7bf3b472a1d25bb771e2b89cf664b095e"
-                            alt="Las Vegas Strip Circuit map"
+                            alt="Harta circuitului Las Vegas Strip"
                             style="width: 100%; border-radius: 12px; display: block;"
                     />
                     <p>Las Vegas Strip Circuit</p>
@@ -124,27 +131,27 @@
 
                 <div class="track-stats">
                     <div class="track-stat">
-                        <span>Track</span>
+                        <span>Circuit</span>
                         <strong>Las Vegas Strip Circuit</strong>
                     </div>
                     <div class="track-stat">
-                        <span>Length</span>
+                        <span>Lungime</span>
                         <strong>6.201 km</strong>
                     </div>
                     <div class="track-stat">
-                        <span>Turns</span>
+                        <span>Viraje</span>
                         <strong>17</strong>
                     </div>
                     <div class="track-stat">
-                        <span>Lap Record</span>
+                        <span>Record tur</span>
                         <strong>1:33.365</strong>
                     </div>
                     <div class="track-stat">
-                        <span>DRS Zones</span>
+                        <span>Zone DRS</span>
                         <strong>2</strong>
                     </div>
                     <div class="track-stat">
-                        <span>Race Laps</span>
+                        <span>Tururi cursă</span>
                         <strong>50</strong>
                     </div>
                 </div>
@@ -153,24 +160,24 @@
 
         <section class="card momentum-card">
             <div class="card-header">
-                <h3 id="momentum-card-title">Top Momentum Drivers</h3>
+                <h3 id="momentum-card-title">Piloți cu cel mai mare momentum</h3>
             </div>
 
             <div class="momentum-content">
                 <div class="momentum-main" id="momentum-main">
                     <div class="momentum-icon">🏁</div>
-                    <p class="momentum-label">Highest current momentum</p>
+                    <p class="momentum-label">Cel mai mare momentum curent</p>
                     <h4>-</h4>
                     <span>Momentum: -</span>
                 </div>
 
                 <div class="momentum-details" id="momentum-details">
                     <div class="momentum-row">
-                        <span>2nd place</span>
+                        <span>Locul 2</span>
                         <strong>-</strong>
                     </div>
                     <div class="momentum-row">
-                        <span>3rd place</span>
+                        <span>Locul 3</span>
                         <strong>-</strong>
                     </div>
                 </div>
