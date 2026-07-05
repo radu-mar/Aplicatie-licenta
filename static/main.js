@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
       hlsInstance = null;
     }
 
-    if (liveFeedEl.canPlayType("application/vnd.apple.mpegurl")) {
+    if (liveFeedEl.canPlayType("application/vnd.apple.mpegurl")) { //MIME type
       liveFeedEl.src = `${hlsUrl}?t=${Date.now()}`;
       liveFeedEl.load();
 
@@ -306,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     driversGrid.innerHTML = drivers.map(driver => {
-      const code = driver.code ?? "--";
+      const code = driver.code ?? "--"; //nullish coalescing
       const driverNumber = driverNumbers[code] ?? "--";
       const fullName = driverNames[code] ?? code;
       const imageUrl = driverImages[code];
@@ -371,7 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function buildPodiumCard(place, driver, className) {
-    const code = driver?.code ?? "-";
+    const code = driver?.code ?? "-"; //optional chaining
     const probability =
       driver?.prob_winner !== undefined && driver?.prob_winner !== null
         ? `${(Number(driver.prob_winner) * 100).toFixed(1)}%`

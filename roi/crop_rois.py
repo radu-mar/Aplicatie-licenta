@@ -19,7 +19,7 @@ if img is None:
 
 print("Dimensiune imagine:", img.shape)
 
-lap_roi = img[100:150, 197:280]
+lap_roi = img[100:150, 150:280]
 leaderboard_roi = img[160:710, 155:215]
 gap_roi = img[160:710, 220:310]
 

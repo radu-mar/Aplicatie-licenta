@@ -6,6 +6,7 @@ import re
 import time
 import threading
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = BASE_DIR
@@ -53,7 +54,8 @@ MODEL_FEATURES = [
 
 
 def extract_lap(frame):
-    lap_roi = frame[100:150, 197:280]
+    # lap_roi = frame[100:150, 197:280]
+    lap_roi = frame[100:150, 150:280]
 
     gray = cv2.cvtColor(lap_roi, cv2.COLOR_BGR2GRAY)
     gray = cv2.resize(gray, None, fx=2, fy=2)
@@ -245,9 +247,6 @@ class LiveRaceProcessor:
         self.pre_race_df = pd.read_csv(PRE_RACE_CSV)
         self.model = joblib.load(MODEL_PATH)
 
-        # self.model_features = list(self.model.feature_names_in_)
-        # print("Feature-uri asteptate de model:", self.model_features)
-
         self.last_gap_to_leader = {}
         self.last_lap_current = None
         self.last_lap_total = None
@@ -277,7 +276,8 @@ class LiveRaceProcessor:
         thread.start()
 
     def _run_loop(self):
-        cap = cv2.VideoCapture(STREAM_URL)
+        os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "fflags;nobuffer|flags;low_delay|max_delay;0"
+        cap = cv2.VideoCapture(STREAM_URL, cv2.CAP_FFMPEG)
 
         if not cap.isOpened():
             print("Nu s-a putut deschide stream-ul:", STREAM_URL)
@@ -287,38 +287,40 @@ class LiveRaceProcessor:
         last_processed_time = 0
 
         while self.running:
-            ret, frame = cap.read()
+            grabbed = cap.grab()
 
-            if not ret:
+            if not grabbed:
                 time.sleep(0.2)
                 continue
-
-            with self.lock:
-                self.latest_frame = frame.copy()
 
             now = time.time()
 
             if now - last_processed_time < PROCESS_EVERY_SECONDS:
                 continue
 
+            ret, frame = cap.retrieve()
+
+            if not ret:
+                continue
+
+            with self.lock:
+                self.latest_frame = frame.copy()
+
             lap_current, lap_total = extract_lap(frame)
             drivers = extract_drivers(frame)
             gaps = extract_gaps(frame)
             safety_car = detect_safety_car(frame)
 
+            if lap_current is not None and lap_total is not None and lap_current > lap_total:
+                lap_current, lap_total = self.last_lap_current, self.last_lap_total
+
+            if lap_total is not None and self.last_lap_total is not None and lap_total != self.last_lap_total:
+                lap_current, lap_total = self.last_lap_current, self.last_lap_total
+
             if lap_current is None:
                 lap_current = self.last_lap_current
             else:
                 self.last_lap_current = lap_current
-
-            if lap_current == 35:
-                lap_current = 3
-
-            if lap_current == 17:
-                lap_current = 7
-
-            if lap_current == 14:
-                lap_current = 4
 
             if lap_total is None:
                 lap_total = self.last_lap_total
@@ -390,17 +392,6 @@ class LiveRaceProcessor:
 
         cap.release()
 
-    def get_latest_frame_jpeg(self):
-        with self.lock:
-            if self.latest_frame is None:
-                return None
-            frame = self.latest_frame.copy()
-
-        ok, buffer = cv2.imencode(".jpg", frame)
-        if not ok:
-            return None
-
-        return buffer.tobytes()
 
     def get_latest_payload(self):
         with self.lock:

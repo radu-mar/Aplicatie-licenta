@@ -21,6 +21,7 @@ races = read_csv("races.csv")
 
 print("-- 0. curatare + consistenta (idempotent) --")
 # in cazul in care se reruleaza scriptul, se scot coloanele deja existente ca sa evit _x / _y la merge
+# șterg coloanele de standings existente pentru a putea rerula scriptul fără duplicate
 standings_cols = [
     "driver_puncte_inainte_de_cursa",
     "driver_pozitie_campionat",

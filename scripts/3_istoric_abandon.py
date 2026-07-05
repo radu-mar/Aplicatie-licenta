@@ -30,6 +30,17 @@ accidente = ["Accident", "Collision", "Spun off", "Collision damage", "Fatal acc
 defectiuni = ["Engine", "Gearbox", "Transmission", "Hydraulics", "Electrical",
              "Suspension", "Brakes", "Overheating", "Power Unit"]
 
+# defectiuni = [
+#     "Engine", "Gearbox", "Transmission", "Clutch", "Hydraulics",
+#     "Electrical", "Electronics", "Suspension", "Brakes", "Differential",
+#     "Overheating", "Mechanical", "Radiator", "Driveshaft",
+#     "Fuel pressure", "Water pressure", "Oil pressure", "Oil leak",
+#     "Water leak", "Fuel pump", "Pneumatics", "Fuel system",
+#     "Power loss", "Drivetrain", "Ignition", "Battery", "Alternator",
+#     "Turbo", "Power Unit", "ERS", "Cooling system", "Throttle",
+#     "Steering", "Exhaust", "Engine fire", "Engine misfire"
+# ]
+
 results["is_accident"] = results["status"].isin(accidente).astype(int)
 results["is_mechanical"] = results["status"].isin(defectiuni).astype(int)
 
@@ -53,7 +64,7 @@ results["rata_accidente_pilot"] = np.where(
 pilot_feat = results.loc[:, ["raceId", "driverId", "istoric_accidente_pilot", "rata_accidente_pilot"]].copy()
 
 # istoric echipa: defectiuni anterioare + rata
-# shift(1) pt a evita leakeage in aceasi cursa
+# exclud valorile din cursa curentă pentru a evita data leakage
 team_race = (
     results.groupby(["constructorId", "raceId", "year", "round"], as_index=False)
     .agg(
@@ -83,7 +94,7 @@ team_race["rata_defectiuni_echipa"] = np.where(
 team_feat = team_race.loc[:, ["raceId", "constructorId", "istoric_defectiuni_echipa", "rata_defectiuni_echipa"]].copy()
 
 # istoric circuit: accidente anterioare + rata
-# shift(1) pt a evita leakeage in aceasi cursa
+# exclud valorile din cursa curentă pentru a evita data leakage
 
 circuit_race = (
     results.groupby(["circuitId", "raceId", "year", "round"], as_index=False)
@@ -120,7 +131,7 @@ features_abandon = base_keys.merge(pilot_feat, on=["raceId", "driverId"], how="l
 features_abandon = features_abandon.merge(team_feat, on=["raceId", "constructorId"], how="left")
 features_abandon = features_abandon.merge(circuit_feat, on=["raceId", "circuitId"], how="left")
 
-inteligenta_abandon = features_abandon.loc[:, [
+abandon_features = features_abandon.loc[:, [
     "raceId", "driverId",
     "istoric_accidente_pilot",
     "rata_accidente_pilot",
@@ -130,7 +141,7 @@ inteligenta_abandon = features_abandon.loc[:, [
 ]].drop_duplicates(subset=["raceId", "driverId"])
 
 print("-- 5. lipirea feature-urilor de abandon in dataset --")
-live_laps = live_laps.merge(inteligenta_abandon, on=["raceId", "driverId"], how="left")
+live_laps = live_laps.merge(abandon_features, on=["raceId", "driverId"], how="left")
 
 cols_abandon = [
     "istoric_accidente_pilot",

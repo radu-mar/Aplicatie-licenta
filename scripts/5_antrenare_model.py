@@ -199,7 +199,7 @@ y_test = test_df["is_winner"].astype(int)
 print(f" -> train: {len(X_train)} randuri (2014-2022)")
 print(f" -> test:  {len(X_test)} randuri (2023-prezent)")
 
-print("-- 4. antrenez modelul ales pentru top-3 --")
+print("-- 4. antrenez modelul pentru estimarea probabilității de câștig --")
 model = RandomForestClassifier(
     n_estimators=300,
     max_depth=12,

@@ -27,7 +27,6 @@ def is_valid_email(email):
     return re.match(r"^[^@\s]+@[^@\s]+\.[^@\s]+$", email) is not None
 
 
-# --- Model User ---
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -45,7 +44,6 @@ with app.app_context():
     db.create_all()
 
 
-# --- Decorator login required ---
 def login_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -58,7 +56,6 @@ def login_required(f):
 live_service = LiveRaceProcessor()
 
 
-# --- Auth routes ---
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if "user_id" in session:
@@ -110,7 +107,6 @@ def logout():
     return redirect(url_for("login"))
 
 
-# --- Main routes (protected) ---
 @app.route("/")
 @login_required
 def index():
@@ -129,7 +125,6 @@ def tracks():
     return render_template("tracks.html", username=session.get("username"))
 
 
-# --- API routes (protected) ---
 @app.route("/api/live-data")
 @login_required
 def live_data():
@@ -143,7 +138,7 @@ def live_events():
         while True:
             payload = live_service.get_latest_payload()
             yield f"data: {json.dumps(payload)}\n\n"
-            time.sleep(2)
+            time.sleep(0.5)
     return Response(event_stream(), mimetype="text/event-stream")
 
 
